@@ -32,19 +32,22 @@ Rumani Dhaage is a modern e-commerce web application built with React and TypeSc
 
 ### Installation
 
-1.  **Clone the repository:**
+1. **Clone the repository:**
+
     ```bash
     git clone https://github.com/your-username/rumani-dhaage.git
     cd rumani-dhaage
     ```
 
-2.  **Install dependencies:**
+2. **Install dependencies:**
+
     ```bash
     npm install
     ```
 
-3.  **Set up environment variables:**
+3. **Set up environment variables:**
     Create a `.env.local` file in the root of the project and add the following environment variables:
+
     ```env
     VITE_SUPABASE_URL="your-supabase-project-url"
     VITE_SUPABASE_ANON_KEY="your-supabase-anon-key"
@@ -53,15 +56,17 @@ Rumani Dhaage is a modern e-commerce web application built with React and TypeSc
 
 ### Running the Application
 
--   **Development Server:**
-    ```bash
-    npm run dev
-    ```
+- **Development Server:**
 
--   **Build for Production:**
-    ```bash
-    npm run build
-    ```
+  ```bash
+  npm run dev
+  ```
+
+- **Build for Production:**
+
+  ```bash
+  npm run build
+  ```
 
 ## Database Migrations
 
@@ -73,11 +78,11 @@ npx supabase db push
 
 ## Authentication
 
--   **Admin Portal**: The application includes a secure admin portal at the `/admin` route.
--   **Authentication Method**: Access is granted via Google OAuth.
--   **Authorization**: Only users whose email addresses are included in the `VITE_ADMIN_EMAILS` environment variable (a comma-separated list) are authorized to access the admin portal.
+- **Admin Portal**: The application includes a secure admin portal at the `/admin` route.
+- **Authentication Method**: Access is granted via Google OAuth.
+- **Authorization**: Only users whose email addresses are included in the `VITE_ADMIN_EMAILS` environment variable (a comma-separated list) are authorized to access the admin portal.
 
 ## Design Philosophy
 
--   **User Routes (Mobile-First)**: All public-facing routes (e.g., `/`, `/products`, `/about`) are designed with a mobile-first approach.
--   **Admin Route (Desktop-First)**: The `/admin` route is designed with a desktop-first approach.
+- **User Routes (Mobile-First)**: All public-facing routes (e.g., `/`, `/products`, `/about`) are designed with a mobile-first approach.
+- **Admin Route (Desktop-First)**: The `/admin` route is designed with a desktop-first approach.
