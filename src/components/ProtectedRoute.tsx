@@ -27,17 +27,17 @@ const ProtectedRoute = () => {
       }
 
       try {
-        const { data, error } = await supabase.rpc(
-          "is_admin",
-          { user_email: userEmail },
-          { schema: "rumani_dhaage" }
-        );
+        const { data, error } = await supabase
+          .from("admin_whitelist")
+          .select("email")
+          .eq("email", userEmail)
+          .single();
 
         if (error) {
           console.error("Error checking whitelist:", error);
           setIsAuthorized(false);
         } else {
-          setIsAuthorized(data);
+          setIsAuthorized(!!data);
         }
       } catch (err) {
         console.error("An unexpected error occurred:", err);
