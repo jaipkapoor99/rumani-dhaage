@@ -1,3 +1,4 @@
+
 # Logs
 logs
 *.log
@@ -25,3 +26,6 @@ dist-ssr
 
 # Sensitive files
 credentials.json
+
+# Gemini CLI files
+GEMINI.md
