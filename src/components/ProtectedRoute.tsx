@@ -1,28 +1,62 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
-import { whitelist } from "@/lib/whitelist";
-import { type Session } from "@supabase/auth-js";
+import { type Session } from "@supabase/supabase-js";
 
 const ProtectedRoute = () => {
   const [session, setSession] = useState<Session | null>(null);
+  const [isAuthorized, setIsAuthorized] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const getSession = async () => {
-      const { data, error } = await supabase.auth.getSession();
-      if (error) {
-        console.error("Error getting session:", error);
+    const checkAuthorization = async (currentSession: Session | null) => {
+      if (!currentSession) {
+        setSession(null);
+        setIsAuthorized(false);
+        setLoading(false);
+        return;
       }
-      setSession(data.session);
-      setLoading(false);
+
+      setSession(currentSession);
+      const userEmail = currentSession.user?.email;
+
+      if (!userEmail) {
+        setIsAuthorized(false);
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const { data, error } = await supabase
+          .from("admin_whitelist")
+          .select("email")
+          .eq("email", userEmail)
+          .single();
+
+        if (error) {
+          console.error("Error checking whitelist:", error);
+          setIsAuthorized(false);
+        } else {
+          setIsAuthorized(!!data);
+        }
+      } catch (err) {
+        console.error("An unexpected error occurred:", err);
+        setIsAuthorized(false);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    getSession();
+    const getSessionAndAuthorize = async () => {
+      const { data } = await supabase.auth.getSession();
+      await checkAuthorization(data.session);
+    };
+
+    getSessionAndAuthorize();
 
     const { data: authListener } = supabase.auth.onAuthStateChange(
       (_event, session) => {
-        setSession(session);
+        checkAuthorization(session);
       }
     );
 
@@ -35,12 +69,7 @@ const ProtectedRoute = () => {
     return <div>Loading...</div>;
   }
 
-  if (!session) {
-    return <Navigate to="/login" />;
-  }
-
-  const userEmail = session.user?.email;
-  if (!userEmail || !whitelist.includes(userEmail)) {
+  if (!session || !isAuthorized) {
     return <Navigate to="/login" />;
   }
 
