@@ -1,5 +1,5 @@
 CREATE TABLE carousel_images (
-  id SERIAL PRIMARY KEY,
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   image_url TEXT NOT NULL,
   alt_text TEXT,
   created_at TIMESTAMPTZ DEFAULT NOW()
