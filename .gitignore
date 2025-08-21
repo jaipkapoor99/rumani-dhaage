@@ -29,3 +29,5 @@ credentials.json
 
 # Gemini CLI files
 GEMINI.md
+TEMP.md 
+.env.production 
