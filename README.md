@@ -86,3 +86,16 @@ npx supabase db push
 
 - **User Routes (Mobile-First)**: All public-facing routes (e.g., `/`, `/products`, `/about`) are designed with a mobile-first approach.
 - **Admin Route (Desktop-First)**: The `/admin` route is designed with a desktop-first approach.
+
+## Deployment
+
+This project is optimized for deployment on [Vercel](https://vercel.com).
+
+1.  **Import Project**: Import your GitHub repository into Vercel.
+2.  **Configure Settings**: Vercel will automatically detect the Vite framework and configure the build settings.
+    -   **Build Command**: `npm run build`
+    -   **Output Directory**: `dist`
+3.  **Environment Variables**: Add your Supabase environment variables (`VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`) in the Vercel project settings.
+4.  **Deploy**: Click "Deploy". Vercel will handle the rest.
+
+For Google OAuth to work correctly, remember to add your Vercel deployment URL to the list of approved redirect URLs in your Supabase project settings.
